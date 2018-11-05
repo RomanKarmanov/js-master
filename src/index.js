@@ -20,12 +20,16 @@ function forEach(array, fn) {
  Посмотрите как работает map и повторите это поведение для массива, который будет передан в параметре array
  */
 function map(array, fn) {
+    var result = []
+
     for (var i = 0; i < array.length; i++) {
         var b = fn(array[i], i, array)
+
+        result.push(b)
         
     }
 
-    return array === b;
+    return result;
 }
 
 /*
@@ -34,13 +38,20 @@ function map(array, fn) {
  Напишите аналог встроенного метода reduce для работы с массивами
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
-function reduce(array, initial) {
-    var i; 
-    var length = array.length;
-    var result = initial;
+function reduce(array, fn, initial) {
+    
+    var result;
+    var i;
 
-    for (i = 0; i < length; i++) {
-        result.call(null, result, array[i], i, array);
+    if ( initial === undefined) {
+        i = 1;
+        result = array[0];
+    } else {
+        i = 0;
+        result = initial;
+    } 
+    for (i; i < array.length; i++) {
+        result = fn(result, array[i], i, array)
     }
 
     return result;
@@ -55,9 +66,16 @@ function reduce(array, initial) {
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
 function upperProps(obj) {
-    obj.toUpperCase();
-    
-    return obj;
+    var result = [];
+
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            result.push(prop.toUpperCase());
+        }
+        
+    }
+
+    return result;
 }
 
 /*
@@ -66,8 +84,26 @@ function upperProps(obj) {
  Напишите аналог встроенного метода slice для работы с массивами
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
-function slice(array, from, to) {
-    return array.slice(from, to);
+function slice(array, from = 0, to = array.length) {
+    let result = [];
+
+    if (to>array.length) {
+        to = array.length;
+    }
+    if (to<0) {
+        to = array.length + to;
+    }
+    if (from<0) {
+        from = array.length + from;
+    }
+    if (from <0) {
+        from = 0;
+    }
+    for (var i = from; i<to; i++) {
+        result.push(array[i]);
+    }
+
+    return result;
 }
 
 /*
